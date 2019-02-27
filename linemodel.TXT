@@ -1,0 +1,14 @@
+model
+	{
+		for( i in 1 : N ) {
+			Y[i] ~ dnorm(mu[i],tau)
+			mu[i] <- alpha + beta * (x[i] - xbar)
+			r[i]<- Y[i] - mu[i]
+			r2[i]<-r[i]*r[i]
+		}
+		tau ~ dgamma(0.001,0.001); sigma <- 1 / sqrt(tau); sigma2<-1/tau
+		alpha ~ dnorm(0.0,1.0E-6)
+		beta ~ dnorm(0.0,1.0E-6)	
+		rsum<-sum(r2[])
+		dev<-rsum/(N-2)
+	}
